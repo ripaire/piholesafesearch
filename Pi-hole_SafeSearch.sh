@@ -25,11 +25,11 @@ hostRecords=(
     "host-record=restrict.youtube.com,216.239.38.120"
     "host-record=strict.bing.com,204.79.197.220"
     "host-record=safesearch.pixabay.com,176.9.158.70"
-    "host-record=search.brave.com,162.159.136.230"  # Added Brave Search host record
+    "host-record=search.brave.com,3.33.205.124"  # Added Brave Search host record
 )
 
 braveSS=(
-    "cname=search.brave.com,162.159.136.230"       # Forces SafeSearch for Brave Search
+    "cname=search.brave.com,3.33.205.124"       # Forces SafeSearch for Brave Search
 )
 # Host Records!!!
 hostRecords=(
@@ -38,14 +38,15 @@ hostRecords=(
     "host-record=restrict.youtube.com,216.239.38.120"
     "host-record=strict.bing.com,204.79.197.220"
     "host-record=safesearch.pixabay.com,176.9.158.70"
+    "host-record=search.brave.com,3.33.205.124"
 )
-ytSS=(
-   "cname=www.youtube.com,restrict.youtube.com"
-   "cname=m.youtube.com,restrict.youtube.com"
-   "cname=youtubei.googleapis.com,restrict.youtube.com"
-   "cname=youtube.googleapis.com,restrict.youtube.com"
-   "cname=www.youtube-nocookie.com,restrict.youtube.com"
-)
+#ytSS=(
+#   "cname=www.youtube.com,restrict.youtube.com"
+#   "cname=m.youtube.com,restrict.youtube.com"
+#   "cname=youtubei.googleapis.com,restrict.youtube.com"
+#   "cname=youtube.googleapis.com,restrict.youtube.com"
+#   "cname=www.youtube-nocookie.com,restrict.youtube.com"
+#)
 bingSS=(
     "cname=bing.com,www.bing.com,strict.bing.com"
 )
@@ -166,11 +167,11 @@ generate() {
     logger all ''$total' Domains'
 
     # YouTube SafeSearch 
-    if [ "$YOUTUBE" == "True" ]; then
-        for line in "${ytSS[@]}"
-            do echo "$line"  >> "${file}"
-        done
-    fi
+    # if [ "$YOUTUBE" == "True" ]; then
+    #     for line in "${ytSS[@]}"
+    #         do echo "$line"  >> "${file}"
+    #     done
+    # fi
 
     # Brave Search SafeSearch
     if [ "$BRAVE" == "True" ]; then
