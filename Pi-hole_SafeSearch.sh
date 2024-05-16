@@ -4,6 +4,7 @@
 ## Define Global Variables
 ## ENABLE IN PIHOLE?
 YOUTUBE=False
+BRAVE=true  
 
 me=`basename "$0"`
 VERSION="1.6.1" # Fixed IP Address for Duckduckgo. Added SafeSearch for pixabay..., also fixed spelling error 
@@ -16,6 +17,20 @@ log="/var/log/${me}.log"
 maxRuns=10
 
 ## Arrays
+
+# --- Arrays ---
+hostRecords=(
+    "host-record=forcesafesearch.google.com,216.239.38.120"
+    "host-record=safe.duckduckgo.com,54.241.17.246"
+    "host-record=restrict.youtube.com,216.239.38.120"
+    "host-record=strict.bing.com,204.79.197.220"
+    "host-record=safesearch.pixabay.com,176.9.158.70"
+    "host-record=search.brave.com,162.159.136.230"  # Added Brave Search host record
+)
+
+braveSS=(
+    "cname=search.brave.com,162.159.136.230"       # Forces SafeSearch for Brave Search
+)
 # Host Records!!!
 hostRecords=(
     "host-record=forcesafesearch.google.com,216.239.38.120"
@@ -59,35 +74,6 @@ REGEX=(
     "(^|\.).+cam$"
     "(^|\.).+adult$"
 )
-#################younes
-# --- Arrays ---
-hostRecords=(
-    # ... (existing host records)
-    "host-record=search.brave.com,162.159.136.230"  # Added Brave Search host record
-)
-
-# ... (other arrays like ytSS, bingSS, etc.)
-
-braveSS=(
-    "cname=search.brave.com,162.159.136.230"  # Forces SafeSearch for Brave Search
-)
-
-
-# ... (rest of the functions - logger, preCheck, generate, etc.)
-
-generate() {
-    # ... (existing code to fetch Google domains)
-
-    # Brave Search SafeSearch
-    if [ "$BRAVE" == "True" ]; then
-        for line in "${braveSS[@]}"; do
-            echo "$line" >> "${file}"
-        done
-    fi
-
-    # ... (rest of the existing generate function)
-}
-########younes
 
 ## Setup Logging
 exec 2>>$log
@@ -134,7 +120,7 @@ if [ "$EUID" -ne 0 ];then
     echo "Please run this script with sudo!"
     exit 1
 fi
-
+    
 ## START LOGGING EVERYTHING
 logger begin
 
@@ -183,6 +169,13 @@ generate() {
     if [ "$YOUTUBE" == "True" ]; then
         for line in "${ytSS[@]}"
             do echo "$line"  >> "${file}"
+        done
+    fi
+
+    # Brave Search SafeSearch
+    if [ "$BRAVE" == "True" ]; then
+        for line in "${braveSS[@]}"; do
+            echo "$line" >> "${file}"
         done
     fi
     
