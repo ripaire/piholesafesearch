@@ -59,6 +59,35 @@ REGEX=(
     "(^|\.).+cam$"
     "(^|\.).+adult$"
 )
+#################younes
+# --- Arrays ---
+hostRecords=(
+    # ... (existing host records)
+    "host-record=search.brave.com,162.159.136.230"  # Added Brave Search host record
+)
+
+# ... (other arrays like ytSS, bingSS, etc.)
+
+braveSS=(
+    "cname=search.brave.com,162.159.136.230"  # Forces SafeSearch for Brave Search
+)
+
+
+# ... (rest of the functions - logger, preCheck, generate, etc.)
+
+generate() {
+    # ... (existing code to fetch Google domains)
+
+    # Brave Search SafeSearch
+    if [ "$BRAVE" == "True" ]; then
+        for line in "${braveSS[@]}"; do
+            echo "$line" >> "${file}"
+        done
+    fi
+
+    # ... (rest of the existing generate function)
+}
+########younes
 
 ## Setup Logging
 exec 2>>$log
